@@ -19,6 +19,8 @@ from math import sqrt
 import datetime
 import argparse
 import os
+import matplotlib as plt
+# TODO: copilot
 
 """
 GraphRec: Graph Neural Networks for Social Recommendation. 
@@ -125,13 +127,14 @@ def main():
     parser.add_argument('--embed_dim', type=int, default=64, metavar='N', help='embedding size')
     parser.add_argument('--lr', type=float, default=0.001, metavar='LR', help='learning rate')
     parser.add_argument('--test_batch_size', type=int, default=1000, metavar='N', help='input batch size for testing')
-    parser.add_argument('--epochs', type=int, default=100, metavar='N', help='number of epochs to train')
+    parser.add_argument('--epochs', type=int, default=10, metavar='N', help='number of epochs to train')
     args = parser.parse_args()
 
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     use_cuda = False
     if torch.cuda.is_available():
         use_cuda = True
+        print("I am using cuda") # my own add
     device = torch.device("cuda" if use_cuda else "cpu")
 
     embed_dim = args.embed_dim
@@ -183,13 +186,15 @@ def main():
     enc_v_history = UV_Encoder(v2e, embed_dim, history_v_lists, history_vr_lists, agg_v_history, cuda=device, uv=False)
 
     # model
+    # TODO: graphRec
     graphrec = GraphRec(enc_u, enc_v_history, r2e).to(device)
     optimizer = torch.optim.RMSprop(graphrec.parameters(), lr=args.lr, alpha=0.9)
 
     best_rmse = 9999.0
     best_mae = 9999.0
     endure_count = 0
-
+    rmseArray = []
+    maeArray = []
     for epoch in range(1, args.epochs + 1):
 
         train(graphrec, device, train_loader, optimizer, epoch, best_rmse, best_mae)
@@ -204,10 +209,15 @@ def main():
         else:
             endure_count += 1
         print("rmse: %.4f, mae:%.4f " % (expected_rmse, mae))
+        rmseArray.append(expected_rmse)
+        maeArray.append(mae)
 
         if endure_count > 5:
             break
-
+# TODO: plot the loss function
 
 if __name__ == "__main__":
     main()
+# TODO : Data visualization dataset
+# TODO : Result visualization attention map
+# TODO : Use more datasets http://www.cse.msu.edu/~tangjili/trust.html
