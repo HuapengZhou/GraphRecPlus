@@ -44,5 +44,8 @@ edge_color = [random.random() for _ in G.edges()]
 # 绘制图
 nx.draw(G, pos, node_color=node_color, node_size=node_size, edge_color=edge_color, with_labels=False, linewidths=0.1, width=0.1)
 
+# 保存图形到指定文件夹
+plt.savefig("Result/images/graph.png")
+
 # 显示图形
 plt.show()
