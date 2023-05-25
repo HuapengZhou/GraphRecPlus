@@ -1,2 +1,2 @@
 # GraphRecPlus
-[ref link](https://github.com/wenqifan03/GraphRec-WWW19)
+GraphRec [ref link](https://github.com/wenqifan03/GraphRec-WWW19)
