@@ -33,6 +33,14 @@ class UV_Aggregator(nn.Module):
             num_histroy_item = len(history)
             tmp_label = history_r[i]
 
+            # chatGPT adds some code here
+            # 如果 history 是一个 numpy 数组，你需要将其转换为 torch.LongTensor
+            history = torch.LongTensor(history).to(self.device)
+
+            # 如果 self.v2e 是一个 nn.Embedding 层，你需要确保它已经移动到正确的设备
+            self.v2e = self.v2e.to(self.device)
+            #print(history.min(), history.max())
+            #print(self.v2e.weight.shape[0])
             if self.uv == True:
                 # user component
                 e_uv = self.v2e.weight[history]

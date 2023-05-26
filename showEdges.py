@@ -18,13 +18,14 @@ print(mat2.keys())
 # print(variable_data2[:50])  # prints the first five rows of 'variable_name'
 
 edges = mat1['trustnetwork']
+print(len(edges))
 print(type(edges))
 # 打乱边的顺序
 np.random.shuffle(edges)
 
 # 取前10000个边（如果 edges 中的边数大于10000）
-edges = edges[:1000] if edges.shape[0] > 10000 else edges
-print(edges)
+edges = edges[:100000] if edges.shape[0] > 10000 else edges
+# print(edges)
 # 创建一个空的无向图
 G = nx.Graph()
 
